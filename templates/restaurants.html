@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='styles.css') }}">
+	</head>
+	<body>
+		<h1>Restaurants</h1>
+
+		<div class='left'>
+		<a href='{{ url_for('restaurantListJSON') }}' target='_blank'>Restaurant List JSON</a><br><br>
+
+		<a href = "{{ url_for('newRestaurant') }}">Create New Restaurant</a><br><br>
+
+		{%if 'username' not in session%}
+		<a href='{{url_for('showLogin')}}'>Click here to Log in.</a>
+		{% else %}
+		<a href='{{url_for('disconnect')}}'>Disconnect</a>
+		{% endif %}
+
+
+		<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul class='flashMessage'>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+</div>
+		{% if restaurants %}
+		<ul class='restaurantList'>
+		{% for restaurant in restaurants %}
+		<li><strong>{{ restaurant.name }}</strong><br>
+		<a href='{{ url_for('editRestaurant', restaurant_id = restaurant.id) }}'>Edit Restaurant Name</a><br>
+		<a href='{{ url_for('deleteRestaurant', restaurant_id = restaurant.id) }}'>Delete Restaurant</a><br>
+		<a href='{{ url_for('showMenu', restaurant_id = restaurant.id) }}'>Show Menu</a><br><br>
+		</li>
+		
+		{% endfor %}
+		</ul>
+		{% else %}
+		<h2>Uh oh, there's no restaurants.</h2>
+		{% endif %}
+		
+	</body>
+</html>

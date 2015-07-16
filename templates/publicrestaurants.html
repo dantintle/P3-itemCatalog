@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='styles.css') }}">
+	</head>
+	<body>
+		<h1>Restaurants</h1>
+
+		{%if 'username' not in session%}
+		<a href='{{url_for('showLogin')}}'>Click here to Log in.</a>
+		{% else %}
+		<a href='{{url_for('disconnect')}}'>Disconnect</a>
+		{% endif %}
+
+
+		<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul class='flashMessage'>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+</div>
+		{% if restaurants %}
+		<ul class='restaurantList'>
+		{% for restaurant in restaurants %}
+		<li><strong>{{ restaurant.name }}</strong><br>
+		
+		<a href='{{ url_for('showMenu', restaurant_id = restaurant.id) }}'>Show Menu</a><br><br>
+		</li>
+		
+		{% endfor %}
+		</ul>
+		{% else %}
+		<h2>Uh oh, you need to log-in to view resaturants. Please log in.</h2>
+		{% endif %}
+		
+	</body>
+</html>

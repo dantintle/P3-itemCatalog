@@ -1,0 +1,78 @@
+<html>
+<head>
+	<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='styles.css') }}">
+	</head>
+
+	
+	<body>
+	
+		
+		<h1>{{ restaurant.name }}</h1>
+
+
+		<div class='left'>
+		<a href='{{ url_for('showRestaurants') }}'>Back to Restaurants</a><br><br>
+
+		<a href= '{{ url_for('menuJSON', restaurant_id = restaurant.id) }}' target='_blank'>Menu JSON</a><br><br>
+	
+
+	<a href = '{{ url_for('newMenuItem', restaurant_id = restaurant.id) }}'>Create New Item</a>
+
+	{%if 'username' not in session%}
+		<a href='{{url_for('showLogin')}}'>Click here to Log in.</a>
+		{% else %}
+		<a href='{{url_for('disconnect')}}'>Disconnect</a>
+		{% endif %}
+
+
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+       
+        {% endif %}
+        
+    {% endwith %}
+</div>
+
+ <div class='menuPane'>
+		{% if items %}
+		{% for i in items %}
+
+<div class='menu'>
+    	
+		<span><h2>{{i.name}}</h2></span>
+		<span><h3>{{i.course}}</h3></span>
+		<span><p class='menuInfo'>{{i.price}} </p></span>
+		<span><p class='menuInfo'>{{i.description}}</p></span>
+
+
+
+
+	<a href='{{ url_for('editMenuItem', restaurant_id=restaurant.id, menu_id = i.id) }}' class='menuLink'>Edit</a><br>
+	<a href='{{ url_for('deleteMenuItem', restaurant_id=restaurant.id, menu_id=i.id) }}' class='menuLink'>Delete</a><br>
+	<a href='{{ url_for('menuItemJSON', restaurant_id=restaurant.id, menu_id=i.id) }}' target='_blank' class='menuLink'>Menu Item JSON</a><br><br>
+
+
+
+		{% endfor %}
+
+	</div>
+		
+		{% else %}
+		<h2>Uh oh, there's no menu items for {{ restaurant.name }}</h2>
+
+		{% endif %}
+
+
+
+</div>
+
+
+	</body>
+
+</html>
