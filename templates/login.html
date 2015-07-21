@@ -53,10 +53,10 @@
 	<script>
 		window.fbAsyncInit = function() {
 			FB.init({
-				appId : '401039986751425',
+				appId : '1681569045405299',
 				cookie : true, //enable cookies to let server access session
 				xfbml : true, //parse social plugins on this page
-				version : 'v2.2'
+				version : 'v2.4'
 			});
 		};
 
@@ -74,6 +74,8 @@
 		var access_token = FB.getAuthResponse()['accessToken'];
 		console.log(access_token);
 		console.log('Welcome! Fetching your access token...');
+
+
 		FB.api('/me', function(response) {
 			console.log('Successful login for: ' + response.name);
 			$.ajax({
@@ -92,13 +94,14 @@
 				}
 			});
 		});
+
 	}
 
 	</script>
 
 
 	
-		<button id='new-menu-item'>
+		<button>
 		<fb:login-button scope='public_profile,email' onlogin='sendTokenToServer();'>
 		<a href="javascript:sendTokenToServer()">Login with Facebook</a>
 
